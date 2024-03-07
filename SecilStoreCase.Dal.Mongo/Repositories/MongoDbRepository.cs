@@ -36,6 +36,7 @@ namespace SecilStoreCase.Dal.Mongo.Repositories
                 .ToListAsync();
         }
 
+
         public async Task<ConfigurationItemModel> GetConfigurationByIdAsync(string id)
         {
             return await _configurations

@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecilStoreCase.Entities", "SecilStoreCase.Entities\SecilStoreCase.Entities.csproj", "{93C2C340-00AD-45FF-9DEA-36DDD78DC341}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecilStoreCase.Entities", "SecilStoreCase.Entities\SecilStoreCase.Entities.csproj", "{93C2C340-00AD-45FF-9DEA-36DDD78DC341}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecilStoreCase.Dal.Interfaces", "SecilStoreCase.Dal.Interfaces\SecilStoreCase.Dal.Interfaces.csproj", "{E32E06CC-DE63-4E9E-82F4-0B7C50FC2CA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecilStoreCase.Dal.Interfaces", "SecilStoreCase.Dal.Interfaces\SecilStoreCase.Dal.Interfaces.csproj", "{E32E06CC-DE63-4E9E-82F4-0B7C50FC2CA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecilStoreCase.Dal.Mongo", "SecilStoreCase.Dal.Mongo\SecilStoreCase.Dal.Mongo.csproj", "{066B2AD3-1BB6-4511-8D17-FE82EC766294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecilStoreCase.Dal.Mongo", "SecilStoreCase.Dal.Mongo\SecilStoreCase.Dal.Mongo.csproj", "{066B2AD3-1BB6-4511-8D17-FE82EC766294}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecilStoreCase.Business", "SecilStoreCase.Business\SecilStoreCase.Business.csproj", "{9CA01C35-B847-4829-8B10-148AAEA1E1DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecilStoreCase.Business", "SecilStoreCase.Business\SecilStoreCase.Business.csproj", "{9CA01C35-B847-4829-8B10-148AAEA1E1DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecilStoreCase.WebApi", "SecilStoreCase.WebApi\SecilStoreCase.WebApi.csproj", "{7F61DA8E-6A29-47AE-B568-831122A9E7C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecilStoreCase.WebApi", "SecilStoreCase.WebApi\SecilStoreCase.WebApi.csproj", "{7F61DA8E-6A29-47AE-B568-831122A9E7C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecilStoreCase.Ui", "SecilStoreCase.Ui\SecilStoreCase.Ui.csproj", "{3D2FEEF7-6F6C-4AF9-B6CB-F7674618B8BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7F61DA8E-6A29-47AE-B568-831122A9E7C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F61DA8E-6A29-47AE-B568-831122A9E7C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F61DA8E-6A29-47AE-B568-831122A9E7C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D2FEEF7-6F6C-4AF9-B6CB-F7674618B8BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D2FEEF7-6F6C-4AF9-B6CB-F7674618B8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D2FEEF7-6F6C-4AF9-B6CB-F7674618B8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D2FEEF7-6F6C-4AF9-B6CB-F7674618B8BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

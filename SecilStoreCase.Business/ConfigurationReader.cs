@@ -24,8 +24,8 @@ namespace SecilStoreCase.Business
             _refreshInterval = TimeSpan.FromMilliseconds(refreshTimerIntervalInMs);
 
             var client = new MongoClient(connectionString);
-            var database = client.GetDatabase("Secil");
-            _configurations = database.GetCollection<ConfigurationItemModel>("SecilStoreDB");
+            var database = client.GetDatabase("SecilStoreCase");
+            _configurations = database.GetCollection<ConfigurationItemModel>("SecilStoreCaseDB");
 
             StartRefreshTask();
         }
@@ -42,7 +42,7 @@ namespace SecilStoreCase.Business
                     }
                     catch (Exception ex)
                     {
-                        // Log exception
+                        
                         Console.WriteLine($"An error occurred during configuration refresh: {ex.Message}");
                     }
                     await Task.Delay(_refreshInterval);
@@ -52,13 +52,21 @@ namespace SecilStoreCase.Business
 
         private async Task RefreshConfigurations()
         {
-            var filter = Builders<ConfigurationItemModel>.Filter.Eq(c => c.ApplicationName, _applicationName) &
-                         Builders<ConfigurationItemModel>.Filter.Eq(c => c.IsActive, true);
-            var configurations = await _configurations.Find(filter).ToListAsync();
-
-            foreach (var config in configurations)
+            try
             {
-                _cache.AddOrUpdate(config.Name, (config.Value, DateTime.UtcNow), (key, oldValue) => (config.Value, DateTime.UtcNow));
+                var filter = Builders<ConfigurationItemModel>.Filter.Eq(c => c.ApplicationName, _applicationName) &
+                             Builders<ConfigurationItemModel>.Filter.Eq(c => c.IsActive, true);
+                var configurations = await _configurations.Find(filter).ToListAsync();
+
+                foreach (var config in configurations)
+                {
+                    _cache.AddOrUpdate(config.Name, (config.Value, DateTime.UtcNow), (key, oldValue) => (config.Value, DateTime.UtcNow));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Could not refresh configurations from MongoDB: {ex.Message}. Continuing with cached values.");
+
             }
         }
 
@@ -75,17 +83,15 @@ namespace SecilStoreCase.Business
             try
             {
 
-                // Değeri T tipine dönüştürmek için daha genel bir yaklaşım
-                // JSON deserialize yerine, Convert.ChangeType kullanılıyor.
-                // T'nin değer tipi olduğu durumlar için (null olamayan tipler), varsayılan değeri döndürür
+              
                 var typeInfo = typeof(T).GetTypeInfo();
                 if (typeInfo.IsValueType && Nullable.GetUnderlyingType(typeof(T)) == null && string.IsNullOrEmpty(configuration.Value))
                 {
-                    return default(T); // veya 'throw new InvalidOperationException' eğer null döndürmek istemiyorsanız
+                    return default(T); 
                 }
                 else
                 {
-                    // Basit tipler için Convert.ChangeType, daha karmaşık tipler için JsonConvert.DeserializeObject kullanılabilir
+                    
                     return (T)Convert.ChangeType(configuration.Value, typeof(T));
                 }
             }

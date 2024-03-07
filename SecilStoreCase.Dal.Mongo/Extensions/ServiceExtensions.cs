@@ -12,7 +12,7 @@ namespace SecilStoreCase.Dal.Mongo.Extensions
     {
         public static IServiceCollection AddMongoDBServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<MongoDbSettings>(configuration.GetSection("MongoDbConnection"));
+            services.Configure<MongoDbSettings>(configuration.GetSection("MongoDBConnection"));
             services.AddSingleton<IMongoDatabase>(serviceProvider =>
             {
                 var settings = serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value;
