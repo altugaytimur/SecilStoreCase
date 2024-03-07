@@ -29,7 +29,21 @@ namespace SecilStoreCase.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                // Log exception
+                
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllConfigurations()
+        {
+            try
+            {
+                var configurations = await _configurationItemRepository.GetAllConfigurationsAsync();
+                return Ok(configurations);
+            }
+            catch (Exception ex)
+            {
+                
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }

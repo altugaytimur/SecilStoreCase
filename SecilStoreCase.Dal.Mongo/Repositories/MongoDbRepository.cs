@@ -36,6 +36,11 @@ namespace SecilStoreCase.Dal.Mongo.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<ConfigurationItemModel>> GetAllConfigurationsAsync()
+        {
+            var result = await _configurations.Find(_ => true).ToListAsync();
+            return result;
+        }
 
         public async Task<ConfigurationItemModel> GetConfigurationByIdAsync(string id)
         {

@@ -19,4 +19,8 @@ public class ConfigurationItemModel
     public string Value { get; set; }
     public bool IsActive { get; set; }
     public string ApplicationName { get; set; }
+
+    [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
+    [BsonElement("lastUpdated")]
+    public DateTime LastUpdated { get; set; }
 }
