@@ -71,15 +71,15 @@
 </table>
 
 <script>
-    // HTML'deki arama kutusunu ve tablodaki satırları al
+    
     const searchInput = document.getElementById('searchInput');
     const tableRows = document.querySelectorAll('tbody tr');
 
-    // Arama kutusuna her tuş basıldığında tetiklenecek fonksiyon
+    
     searchInput.addEventListener('input', function () {
         const searchText = this.value.toLowerCase();
 
-        // Her satırı kontrol et ve arama metniyle eşleşenleri gizle veya göster
+       
         tableRows.forEach(row => {
             const nameColumnText = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
             if (nameColumnText.includes(searchText)) {

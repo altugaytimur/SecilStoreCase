@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using Newtonsoft.Json;
 using SecilStoreCase.Entities.Entities;
+using SecilStoreCase.Entities.Enums;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -88,8 +89,7 @@ public class ConfigurationReader
 
     public T GetValue<T>(string key)
     {
-        var filter = Builders<ConfigurationItemModel>.Filter.Eq(c => c.Name, key) & Builders<ConfigurationItemModel>.Filter.Eq(c => c.IsActive, true);
-        var configuration = _configurations.Find(filter).FirstOrDefault();
+        var configuration = _configurations.Find(Builders<ConfigurationItemModel>.Filter.Eq(c => c.Name, key) & Builders<ConfigurationItemModel>.Filter.Eq(c => c.IsActive, true)).FirstOrDefault();
 
         if (configuration == null)
         {
@@ -98,23 +98,24 @@ public class ConfigurationReader
 
         try
         {
-
-          
-            var typeInfo = typeof(T).GetTypeInfo();
-            if (typeInfo.IsValueType && Nullable.GetUnderlyingType(typeof(T)) == null && string.IsNullOrEmpty(configuration.Value))
+            switch (configuration.ConfigurationValueType)
             {
-                return default(T); 
-            }
-            else
-            {
-                
-                return (T)Convert.ChangeType(configuration.Value, typeof(T));
+                case ConfigurationValueType.String:
+                    return (T)Convert.ChangeType(configuration.Value, typeof(T));
+                case ConfigurationValueType.Int:
+                    return (T)Convert.ChangeType(int.Parse(configuration.Value), typeof(T));
+                case ConfigurationValueType.Bool:
+                    return (T)Convert.ChangeType(bool.Parse(configuration.Value), typeof(T));
+                case ConfigurationValueType.Double:
+                    return (T)Convert.ChangeType(double.Parse(configuration.Value), typeof(T));
+                default:
+                    throw new InvalidOperationException($"Unsupported configuration type '{configuration.ConfigurationValueType}' for key '{key}'.");
             }
         }
-        catch (JsonException ex)
+        catch (Exception ex)
         {
-            throw new InvalidOperationException($"Error deserializing configuration value for key '{key}': {ex.Message}", ex);
+            throw new InvalidOperationException($"Error processing configuration value for key '{key}': {ex.Message}", ex);
         }
     }
-   
+
 }
