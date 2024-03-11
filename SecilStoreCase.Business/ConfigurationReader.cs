@@ -96,18 +96,28 @@ public class ConfigurationReader
             throw new KeyNotFoundException($"Configuration key '{key}' not found for application '{_applicationName}'.");
         }
 
+        object value = configuration.Value;
+
         try
         {
             switch (configuration.ConfigurationValueType)
             {
                 case ConfigurationValueType.String:
-                    return (T)Convert.ChangeType(configuration.Value, typeof(T));
+                    if (typeof(T) == typeof(string))
+                        return (T)value;
+                    break;
                 case ConfigurationValueType.Int:
-                    return (T)Convert.ChangeType(int.Parse(configuration.Value), typeof(T));
+                    if (typeof(T) == typeof(int))
+                        value = int.Parse(configuration.Value);
+                    break;
                 case ConfigurationValueType.Bool:
-                    return (T)Convert.ChangeType(bool.Parse(configuration.Value), typeof(T));
+                    if (typeof(T) == typeof(bool))
+                        value = bool.Parse(configuration.Value);
+                    break;
                 case ConfigurationValueType.Double:
-                    return (T)Convert.ChangeType(double.Parse(configuration.Value), typeof(T));
+                    if (typeof(T) == typeof(double))
+                        value = double.Parse(configuration.Value);
+                    break;
                 default:
                     throw new InvalidOperationException($"Unsupported configuration type '{configuration.ConfigurationValueType}' for key '{key}'.");
             }
@@ -116,6 +126,15 @@ public class ConfigurationReader
         {
             throw new InvalidOperationException($"Error processing configuration value for key '{key}': {ex.Message}", ex);
         }
-    }
 
+       
+        try
+        {
+            return (T)Convert.ChangeType(value, typeof(T));
+        }
+        catch (InvalidCastException)
+        {
+            throw new InvalidOperationException($"Configuration value for key '{key}' cannot be converted to type '{typeof(T).Name}'.");
+        }
+    }
 }
